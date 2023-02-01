@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                     + sharedPreferences.getString("password", null) + "\"}";
             RequestBody body = RequestBody.create(json, JSON);
 
-            Request request = new Request.Builder().url("http://192.168.191.5:5000/login").post(body).build();
+            Request request = new Request.Builder().url("http://192.168.191.4:5000/login").post(body).build();
 
             okHttpClient.newCall(request).enqueue(new Callback() {
                 @Override
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     String responseMessage = response.body().string();
                     if(responseMessage.equals("Success")) {
-                        Intent intent = new Intent(MainActivity.this, Location.class);
+                        Intent intent = new Intent(MainActivity.this, LocationActivity.class);
                         startActivity(intent);
                     }
                 }
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         String json = "{\"userName\":\"" + userName + "\",\"password\":\"" + password + "\"}";
         RequestBody body = RequestBody.create(json, JSON);
 
-        Request request = new Request.Builder().url("http://192.168.191.5:5000/login").post(body).build();
+        Request request = new Request.Builder().url("http://192.168.229.5:5000/login").post(body).build();
 
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     editor.putString("password", password);
                     editor.commit();
 
-                    Intent intent = new Intent(MainActivity.this, Location.class);
+                    Intent intent = new Intent(MainActivity.this, LocationActivity.class);
                     startActivity(intent);
                 }
                 else {
