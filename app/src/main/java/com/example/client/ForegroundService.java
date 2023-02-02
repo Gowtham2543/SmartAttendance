@@ -9,7 +9,16 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class ForegroundService extends Service {
     public static final String CHANNEL_ID = "ForegroundServiceChannel";
@@ -32,6 +41,13 @@ public class ForegroundService extends Service {
                 .build();
         startForeground(1, notification);
 //        .setSmallIcon(com.google.android.material.R.drawable.abc_ic_star_black_16dp).;
+
+
+        Intent dialogIntent = new Intent(this, BiometricActivity.class);
+        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(dialogIntent);
+
+
         return START_STICKY;
     }
 
