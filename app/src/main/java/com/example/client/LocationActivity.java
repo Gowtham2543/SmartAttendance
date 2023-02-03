@@ -15,10 +15,6 @@ public class LocationActivity extends AppCompatActivity {
         
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
-        Intent serviceIntent = new Intent(this, ForegroundService.class);
-        serviceIntent.putExtra("inputExtra", "Foreground Service");
-
-        ContextCompat.startForegroundService(this, serviceIntent);
 
     }
 }

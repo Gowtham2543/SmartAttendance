@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import java.io.IOException;
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     Button login;
     OkHttpClient okHttpClient;
     SharedPreferences sharedPreferences;
+    String endpointURl = "http://192.168.25.5:5000/";
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     @Override
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                     + sharedPreferences.getString("password", null) + "\"}";
             RequestBody body = RequestBody.create(json, JSON);
 
-            Request request = new Request.Builder().url("http://192.168.25.5:5000/login").post(body).build();
+            Request request = new Request.Builder().url(endpointURl + "login").post(body).build();
 
             okHttpClient.newCall(request).enqueue(new Callback() {
                 @Override
@@ -48,8 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     String responseMessage = response.body().string();
                     if(responseMessage.equals("Success")) {
-                        Intent intent = new Intent(MainActivity.this, LocationActivity.class);
-                        startActivity(intent);
+                        loginSuccess();
                     }
                 }
             });
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         String json = "{\"userName\":\"" + userName + "\",\"password\":\"" + password + "\"}";
         RequestBody body = RequestBody.create(json, JSON);
 
-        Request request = new Request.Builder().url("http://192.168.25.5:5000/login").post(body).build();
+        Request request = new Request.Builder().url(endpointURl + "login").post(body).build();
 
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
@@ -90,14 +91,24 @@ public class MainActivity extends AppCompatActivity {
                     editor.putString("password", password);
                     editor.commit();
 
-                    Intent intent = new Intent(MainActivity.this, LocationActivity.class);
-                    startActivity(intent);
+                    loginSuccess();
+
                 }
                 else {
                     runOnUiThread(() -> Toast.makeText(getApplicationContext(), responseMessage, Toast.LENGTH_SHORT).show());
                 }
             }
         });
+    }
+
+    protected void loginSuccess() {
+
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        serviceIntent.putExtra("inputExtra", "Foreground Service");
+        ContextCompat.startForegroundService(this, serviceIntent);
+
+        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+        startActivity(intent);
     }
 
 }

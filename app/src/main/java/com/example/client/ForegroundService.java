@@ -43,9 +43,9 @@ public class ForegroundService extends Service {
 //        .setSmallIcon(com.google.android.material.R.drawable.abc_ic_star_black_16dp).;
 
 
-        Intent dialogIntent = new Intent(this, BiometricActivity.class);
-        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(dialogIntent);
+//        Intent dialogIntent = new Intent(this, BiometricActivity.class);
+//        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(dialogIntent);
 
 
         return START_STICKY;
