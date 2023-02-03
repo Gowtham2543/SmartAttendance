@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("userName", userName);
                     editor.putString("password", password);
-                    editor.commit();
+                    editor.apply();
 
                     loginSuccess();
 

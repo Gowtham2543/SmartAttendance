@@ -56,13 +56,7 @@ public class BiometricActivity extends AppCompatActivity {
         Handler timeOutHandler = new Handler();
 
         // If user fails to authenticate it fails
-        timeOutHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                biometricPrompt.cancelAuthentication();
-
-            }
-        } ,4000);
+        timeOutHandler.postDelayed(() -> biometricPrompt.cancelAuthentication(),4000);
 
     }
 }

@@ -65,46 +65,43 @@
         android:orientation="vertical"
         app:layout_constraintGuide_end="233dp" />
 
-    <EditText
-        android:id="@+id/editName"
-        android:layout_width="150dp"
+    <TextView
+        android:id="@+id/displayName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintBaseline_toBaselineOf="@+id/name"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline" />
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/name" />
 
-    <EditText
-        android:id="@+id/editEmail"
-        android:layout_width="150dp"
+    <TextView
+        android:id="@+id/displayEmail"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        app:layout_constraintBaseline_toBaselineOf="@+id/email"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/email"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline" />
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/email" />
 
-    <EditText
-        android:id="@+id/editAge"
-        android:layout_width="150dp"
+    <TextView
+        android:id="@+id/displayAge"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintBaseline_toBaselineOf="@+id/age"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/age"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline" />
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/age" />
 
-    <EditText
-        android:id="@+id/editDesignation"
-        android:layout_width="150dp"
+    <TextView
+        android:id="@+id/displayDesignation"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintBaseline_toBaselineOf="@+id/designation"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/designation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline" />
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/designation" />
 </androidx.constraintlayout.widget.ConstraintLayout>
