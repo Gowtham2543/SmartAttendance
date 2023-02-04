@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     Button login;
     OkHttpClient okHttpClient;
     SharedPreferences sharedPreferences;
-    String endpointURl = "http://192.168.25.5:5000/";
+    String endpointURl = "http://192.168.82.4:5000/";
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     @Override
