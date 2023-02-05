@@ -6,24 +6,13 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.IBinder;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
-import com.google.android.gms.location.Geofence;
-import com.google.android.gms.location.GeofencingClient;
-import com.google.android.gms.location.GeofencingRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class ForegroundService extends Service {
     public static final String CHANNEL_ID = "ForegroundServiceChannel";
@@ -33,7 +22,7 @@ public class ForegroundService extends Service {
     }
 
     public void onCreate() {
-//        super.onCreate();
+        super.onCreate();
 
     }
 
@@ -46,16 +35,12 @@ public class ForegroundService extends Service {
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID).setContentTitle(input)
                 .setContentIntent(pendingIntent)
-//                .setSmallIcon(com.google.android.material.R.drawable.);
                 .build();
+
         startForeground(1, notification);
 
-
-
-//        Intent dialogIntent = new Intent(this, BiometricActivity.class);
-//        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivity(dialogIntent);
-
+        ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(1);
+        scheduledThreadPoolExecutor.scheduleAtFixedRate(this::test, 0, 5, TimeUnit.SECONDS);
 
         return START_STICKY;
     }
@@ -77,6 +62,10 @@ public class ForegroundService extends Service {
              manager.createNotificationChannel(serviceChannel);
         }
 
+    }
+
+    private void test() {
+        System.out.println("Hello World");
     }
 
 }
