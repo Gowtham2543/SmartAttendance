@@ -33,6 +33,7 @@ public class BiometricActivity extends AppCompatActivity {
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(getApplicationContext(),
                         "Authentication succeeded!", Toast.LENGTH_SHORT).show();
+                finish();
             }
 
             @Override
@@ -47,7 +48,7 @@ public class BiometricActivity extends AppCompatActivity {
         promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric login for my app")
                 .setSubtitle("Log in using your biometric credential")
-//                .setNegativeButtonText("Use account password")
+                .setNegativeButtonText("Use account password")
                 .build();
 
         biometricPrompt.authenticate(promptInfo);
