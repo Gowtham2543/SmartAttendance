@@ -17,6 +17,7 @@ public class BiometricActivity extends AppCompatActivity {
     private Executor executor;
     private BiometricPrompt biometricPrompt;
     private BiometricPrompt.PromptInfo promptInfo;
+    private boolean isAuthenticated = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +34,7 @@ public class BiometricActivity extends AppCompatActivity {
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(getApplicationContext(),
                         "Authentication succeeded!", Toast.LENGTH_SHORT).show();
+                isAuthenticated = true;
                 finish();
             }
 
@@ -46,7 +48,7 @@ public class BiometricActivity extends AppCompatActivity {
         });
 
         promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Biometric login for my app")
+                .setTitle("Biometric Authentication")
                 .setSubtitle("Log in using your biometric credential")
                 .setNegativeButtonText("Use account password")
                 .build();
@@ -56,7 +58,9 @@ public class BiometricActivity extends AppCompatActivity {
         Handler timeOutHandler = new Handler();
 
         // If user fails to authenticate it fails
-        timeOutHandler.postDelayed(() -> biometricPrompt.cancelAuthentication(),4000);
-
+        if(!isAuthenticated)
+        {
+            timeOutHandler.postDelayed(() -> biometricPrompt.cancelAuthentication(),4000);
+        }
     }
 }

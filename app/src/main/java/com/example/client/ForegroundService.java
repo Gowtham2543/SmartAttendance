@@ -8,7 +8,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
-import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
@@ -39,13 +38,9 @@ public class ForegroundService extends Service {
                 .build();
 
         startForeground(1, notification);
-        Log.d("Sbjebe", "debdebfue");
-        Intent dialogIntent = new Intent(this, BiometricActivity.class);
-        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(dialogIntent);
 
-//        ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(1);
-//        scheduledThreadPoolExecutor.scheduleAtFixedRate(this::test, 0, 5, TimeUnit.SECONDS);
+        ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(1);
+        scheduledThreadPoolExecutor.scheduleAtFixedRate(this::biometricCheck, 10, 30, TimeUnit.SECONDS);
 
         return START_STICKY;
     }
@@ -69,8 +64,9 @@ public class ForegroundService extends Service {
 
     }
 
-    private void test() {
-        System.out.println("Hello World");
+    private void biometricCheck() {
+        Intent dialogIntent = new Intent(this, BiometricActivity.class);
+        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(dialogIntent);
     }
-
 }
