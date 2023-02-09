@@ -11,6 +11,7 @@ import android.os.IBinder;
 
 import androidx.core.app.NotificationCompat;
 
+import java.time.LocalTime;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -39,8 +40,12 @@ public class ForegroundService extends Service {
 
         startForeground(1, notification);
 
-        ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(1);
-        scheduledThreadPoolExecutor.scheduleAtFixedRate(this::biometricCheck, 10, 30, TimeUnit.SECONDS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if(LocalTime.now().isAfter(LocalTime.parse("09:00")) && LocalTime.now().isBefore(LocalTime.parse("18:00"))) {
+                ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(1);
+                scheduledThreadPoolExecutor.scheduleAtFixedRate(this::biometricCheck, 10, 30, TimeUnit.SECONDS);
+            }
+        }
 
         return START_STICKY;
     }
