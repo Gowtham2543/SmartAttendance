@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -27,8 +30,10 @@ public class LoginActivity extends AppCompatActivity {
     Button login;
     OkHttpClient okHttpClient;
     SharedPreferences sharedPreferences;
-    String endpointURl = "http://192.168.91.4:5000/";
+    String endpointURl = "http://192.168.91.4:5000/employee/";
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,21 +65,28 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                String responseMessage = response.body().string();
-                if(responseMessage.equals("Success")) {
+                String responseMsg = response.body().string();
+                JSONObject jsonObject;
+                try {
+                    jsonObject = new JSONObject(responseMsg);
+                    if(jsonObject.getString("status").equals("Success")) {
 
-                    sharedPreferences = getSharedPreferences("userDetails", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("userName", userName);
-                    editor.putString("password", password);
-                    editor.apply();
+                        sharedPreferences = getSharedPreferences("userDetails", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("userName", userName);
+                        editor.putString("password", password);
+                        editor.putString("accessToken", jsonObject.getString("access_token"));
+                        editor.apply();
+                        loginSuccess();
 
-                    loginSuccess();
-
+                    }
+                    else {
+                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), responseMsg, Toast.LENGTH_SHORT).show());
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
                 }
-                else {
-                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), responseMessage, Toast.LENGTH_SHORT).show());
-                }
+
             }
         });
     }

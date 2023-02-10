@@ -40,10 +40,13 @@ public class ForegroundService extends Service {
 
         startForeground(1, notification);
 
+        int count = 0;
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            if(LocalTime.now().isAfter(LocalTime.parse("09:00")) && LocalTime.now().isBefore(LocalTime.parse("18:00"))) {
+            if(LocalTime.now().isAfter(LocalTime.parse("09:00")) && LocalTime.now().isBefore(LocalTime.parse("18:00")) && count < 5) {
+                count++;
                 ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(1);
-                scheduledThreadPoolExecutor.scheduleAtFixedRate(this::biometricCheck, 10, 30, TimeUnit.SECONDS);
+                scheduledThreadPoolExecutor.scheduleAtFixedRate(this::biometricCheck, 0, 7200, TimeUnit.SECONDS);
             }
         }
 

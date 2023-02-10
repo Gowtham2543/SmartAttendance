@@ -31,7 +31,6 @@ import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class DetailActivity extends AppCompatActivity {
@@ -43,8 +42,7 @@ public class DetailActivity extends AppCompatActivity {
     public PendingIntent geofencePendingIntent;
     OkHttpClient okHttpClient;
     SharedPreferences sharedPreferences;
-    public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-    String endpointURl = "http://192.168.91.4:5000/";
+    String endpointURl = "http://192.168.91.4:5000/employee/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,11 +73,7 @@ public class DetailActivity extends AppCompatActivity {
     private void setDetails() {
         sharedPreferences = getSharedPreferences("userDetails", MODE_PRIVATE);
 
-        String json = "{\"userName\":\"" + sharedPreferences.getString("userName", null) + "\"}";
-        System.out.println(json);
-
-        RequestBody body = RequestBody.create(json, JSON);
-        Request request = new Request.Builder().url(endpointURl + "list").post(body).build();
+        Request request = new Request.Builder().header("Authorization", "Bearer " + sharedPreferences.getString("accessToken", null)).url(endpointURl + "details_select").build();
 
 
         okHttpClient = new OkHttpClient();
@@ -102,8 +96,8 @@ public class DetailActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     try {
                         displayEmail.setText(jsonObject.getString("email"));
-                        displayAge.setText(jsonObject.getString("age"));
-                        displayName.setText(jsonObject.getString("username"));
+                        displayAge.setText(jsonObject.getString("dob"));
+                        displayName.setText(jsonObject.getString("first_name"));
                         displayDesignation.setText(jsonObject.getString("designation"));
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
@@ -127,7 +121,7 @@ public class DetailActivity extends AppCompatActivity {
                 )
                 .setLoiteringDelay(1000)
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
-                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_EXIT)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_EXIT | Geofence.GEOFENCE_TRANSITION_ENTER)
                 .build()
         );
 
@@ -135,15 +129,8 @@ public class DetailActivity extends AppCompatActivity {
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
             geofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
-                    .addOnSuccessListener(this, aVoid -> {
-                        // Geofences added
-                        // ...
-                        System.out.println("Added geofence");
-                    })
-                    .addOnFailureListener(this, e -> {
-
-                        System.out.println("Failed to add Geofence");
-                    });
+                    .addOnSuccessListener(this, aVoid -> Toast.makeText(getApplicationContext(), "Geofence added Successfully", Toast.LENGTH_SHORT).show())
+                    .addOnFailureListener(this, e -> Toast.makeText(getApplicationContext(), "Geofence failed", Toast.LENGTH_SHORT).show());
         }
         else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,

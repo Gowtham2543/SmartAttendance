@@ -3,9 +3,6 @@ package com.example.client;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     OkHttpClient okHttpClient;
     SharedPreferences sharedPreferences;
-    String endpointURl = "http://192.168.91.4:5000/";
+    String endpointURl = "http://192.168.91.4:5000/employee/";
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     @Override
@@ -33,32 +30,9 @@ public class MainActivity extends AppCompatActivity {
 
         okHttpClient = new OkHttpClient();
         sharedPreferences = getSharedPreferences("userDetails", MODE_PRIVATE);
-        if(sharedPreferences.contains("userName") && sharedPreferences.contains("password")) {
-            String json = "{\"userName\":\"" + sharedPreferences.getString("userName", null) + "\",\"password\":\""
-                    + sharedPreferences.getString("password", null) + "\"}";
-            RequestBody body = RequestBody.create(json, JSON);
-
-            Request request = new Request.Builder().url(endpointURl + "login").post(body).build();
-
-            okHttpClient.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                }
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    String responseMessage = response.body().string();
-                    if(responseMessage.equals("Success")) {
-
-                        loginSuccess();
-                    }
-                    else {
-                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                    }
-                }
-            });
+        if(sharedPreferences.contains("accessToken")) {
+            Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+            startActivity(intent);
         }
         else {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
