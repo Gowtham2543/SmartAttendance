@@ -60,7 +60,7 @@ public class ForegroundService extends Service {
         if(Build.VERSION.SDK_INT >=  Build.VERSION_CODES.O) {
             NotificationChannel serviceChannel = new NotificationChannel(
                     CHANNEL_ID,
-                    "FOREGROUND SERVICE CHANNEL",
+                    "Biometric Check",
                     NotificationManager.IMPORTANCE_DEFAULT
             );
              NotificationManager manager = getSystemService(NotificationManager.class);
