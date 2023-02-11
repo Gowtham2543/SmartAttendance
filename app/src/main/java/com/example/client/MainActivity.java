@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     OkHttpClient okHttpClient;
     SharedPreferences sharedPreferences;
-    String endpointURl = "http://192.168.91.4:5000/employee/";
+    String endpointURl = "http://192.168.91.5:5000/employee/";
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     @Override
@@ -31,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
         okHttpClient = new OkHttpClient();
         sharedPreferences = getSharedPreferences("userDetails", MODE_PRIVATE);
         if(sharedPreferences.contains("accessToken")) {
+
+            Intent serviceIntent = new Intent(this, ForegroundService.class);
+            serviceIntent.putExtra("inputExtra", "Foreground Service");
+            ContextCompat.startForegroundService(this, serviceIntent);
+
             Intent intent = new Intent(MainActivity.this, DetailActivity.class);
             startActivity(intent);
         }

@@ -66,6 +66,7 @@ public class BiometricActivity extends AppCompatActivity {
                 super.onAuthenticationFailed();
                 Toast.makeText(getApplicationContext(), "Authentication failed",
                                 Toast.LENGTH_SHORT).show();
+                biometricPrompt.cancelAuthentication();
                 sharedPreferences = getSharedPreferences("userDetails", MODE_PRIVATE);
                 Request request = new Request.Builder().header("Authorization", "Bearer " + sharedPreferences.getString("accessToken", null)).url(endpointURl + "absent").build();
 
@@ -88,8 +89,9 @@ public class BiometricActivity extends AppCompatActivity {
         });
 
         promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Biometric Authentication")
-                .setNegativeButtonText(".")
+                .setTitle("Verify it's you")
+                .setSubtitle("Use your fingerprint to continue")
+                .setNegativeButtonText("CANCEL")
                 .build();
 
         biometricPrompt.authenticate(promptInfo);

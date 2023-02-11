@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     Button login;
     OkHttpClient okHttpClient;
     SharedPreferences sharedPreferences;
-    String endpointURl = "http://192.168.91.4:5000/employee/";
+    String endpointURl = "http://192.168.91.5:5000/employee/";
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
 
