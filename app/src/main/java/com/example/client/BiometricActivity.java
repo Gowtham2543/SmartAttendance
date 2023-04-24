@@ -25,7 +25,7 @@ public class BiometricActivity extends AppCompatActivity {
     private BiometricPrompt.PromptInfo promptInfo;
     SharedPreferences sharedPreferences;
     OkHttpClient okHttpClient;
-    String endpointURl = "http://192.168.91.4:5000/";
+    String endpointURl = Endpoint.index;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

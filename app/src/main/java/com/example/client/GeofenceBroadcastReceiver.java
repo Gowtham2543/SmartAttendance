@@ -25,7 +25,7 @@ import okhttp3.Response;
 public class GeofenceBroadcastReceiver extends BroadcastReceiver {
 
     SharedPreferences sharedPreferences;
-    String endpointURl = "http://192.168.91.5:5000/";
+    String endpointURl = Endpoint.index;
     OkHttpClient okHttpClient;
 
     @Override

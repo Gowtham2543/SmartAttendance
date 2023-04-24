@@ -24,13 +24,16 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import com.example.client.Endpoint;
+
 public class LoginActivity extends AppCompatActivity {
 
     EditText editUserName, editPassword;
     Button login;
     OkHttpClient okHttpClient;
     SharedPreferences sharedPreferences;
-    String endpointURl = "http://192.168.91.5:5000/employee/";
+//    String endpointURl = "http://192.168.1.8:5000/employee/";
+    String endpointURl = Endpoint.index + "employee/";
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
 
@@ -67,9 +70,15 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String responseMsg = response.body().string();
                 JSONObject jsonObject;
+                String status;
                 try {
                     jsonObject = new JSONObject(responseMsg);
-                    if(jsonObject.getString("status").equals("Success")) {
+                    status = jsonObject.getString("status");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                try {
+                    if(status.equals("Success")) {
 
                         sharedPreferences = getSharedPreferences("userDetails", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -81,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
                     else {
-                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), responseMsg, Toast.LENGTH_SHORT).show());
+                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), status, Toast.LENGTH_SHORT).show());
                     }
                 } catch (JSONException e) {
                     throw new RuntimeException(e);

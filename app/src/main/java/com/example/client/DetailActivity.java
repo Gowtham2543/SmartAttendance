@@ -42,7 +42,7 @@ public class DetailActivity extends AppCompatActivity {
     public PendingIntent geofencePendingIntent;
     OkHttpClient okHttpClient;
     SharedPreferences sharedPreferences;
-    String endpointURl = "http://192.168.91.5:5000/employee/";
+    String endpointURl = Endpoint.index + "employee/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,9 +115,9 @@ public class DetailActivity extends AppCompatActivity {
         geofenceList.add(new Geofence.Builder()
                 .setRequestId("GEOFENCE LOCATION")
                 .setCircularRegion(
-                        11.025109,
+                        19.025109,
                         77.028585,
-                        200
+                        2
                 )
                 .setLoiteringDelay(1000)
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
