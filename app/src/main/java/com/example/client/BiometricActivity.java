@@ -20,9 +20,7 @@ import okhttp3.Response;
 
 public class BiometricActivity extends AppCompatActivity {
 
-    private Executor executor;
     private BiometricPrompt biometricPrompt;
-    private BiometricPrompt.PromptInfo promptInfo;
     SharedPreferences sharedPreferences;
     OkHttpClient okHttpClient;
     String endpointURl = Endpoint.index;
@@ -30,7 +28,7 @@ public class BiometricActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_biometric);
-        executor = ContextCompat.getMainExecutor(this);
+        Executor executor = ContextCompat.getMainExecutor(this);
         biometricPrompt = new BiometricPrompt(BiometricActivity.this, executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
@@ -88,7 +86,7 @@ public class BiometricActivity extends AppCompatActivity {
 
         });
 
-        promptInfo = new BiometricPrompt.PromptInfo.Builder()
+        BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Verify it's you")
                 .setSubtitle("Use your fingerprint to continue")
                 .setNegativeButtonText("CANCEL")

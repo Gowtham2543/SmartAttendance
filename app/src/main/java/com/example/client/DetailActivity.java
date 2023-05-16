@@ -28,15 +28,14 @@ import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 public class DetailActivity extends AppCompatActivity {
     ImageView profile;
-    TextView tName, tEmail, tDesignation, tAge,
-            displayName, displayEmail, displayAge, displayDesignation;
+    TextView tName, tEmail, tDesignation, tAge, tAttendance,
+            displayName, displayEmail, displayAge, displayDesignation, displayAttendance;
     private GeofencingClient geofencingClient;
     List<Geofence> geofenceList = new ArrayList<>();
     public PendingIntent geofencePendingIntent;
@@ -53,10 +52,12 @@ public class DetailActivity extends AppCompatActivity {
         tEmail = findViewById(R.id.email);
         tDesignation = findViewById(R.id.designation);
         tAge = findViewById(R.id.age);
+        tAttendance = findViewById(R.id.attendance);
         displayName = findViewById(R.id.displayName);
         displayEmail = findViewById(R.id.displayEmail);
         displayAge = findViewById(R.id.displayAge);
         displayDesignation = findViewById(R.id.displayDesignation);
+        displayAttendance = findViewById(R.id.displayAttendance);
 
         profile = findViewById(R.id.profile);
 
@@ -64,6 +65,8 @@ public class DetailActivity extends AppCompatActivity {
         tEmail.setText("EMAIL");
         tAge.setText("AGE");
         tDesignation.setText("DESIGNATION");
+        tAttendance.setText("ATTENDANCE");
+        displayAttendance.setText("90%");
 
         setDetails();
         startGeofence();

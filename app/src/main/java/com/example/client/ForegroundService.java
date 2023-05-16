@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ForegroundService extends Service {
     public static final String CHANNEL_ID = "ForegroundServiceChannel";
-
+    int count = 0;
 
     public ForegroundService() {
     }
@@ -40,13 +40,12 @@ public class ForegroundService extends Service {
 
         startForeground(1, notification);
 
-        int count = 0;
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            if(LocalTime.now().isAfter(LocalTime.parse("09:00")) && LocalTime.now().isBefore(LocalTime.parse("18:00")) && count < 5) {
-                count++;
+            if(LocalTime.now().isAfter(LocalTime.parse("09:00")) && LocalTime.now().isBefore(LocalTime.parse("18:00")) && count < 3) {
                 ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(1);
-                scheduledThreadPoolExecutor.scheduleAtFixedRate(this::biometricCheck, 0, 7200, TimeUnit.SECONDS);
+                scheduledThreadPoolExecutor.scheduleAtFixedRate(this::biometricCheck, 0, 30, TimeUnit.SECONDS);
             }
         }
 
@@ -73,6 +72,7 @@ public class ForegroundService extends Service {
     }
 
     private void biometricCheck() {
+
         Intent dialogIntent = new Intent(this, BiometricActivity.class);
         dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(dialogIntent);

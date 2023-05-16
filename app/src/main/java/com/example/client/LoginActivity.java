@@ -1,15 +1,15 @@
 package com.example.client;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,15 +24,12 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import com.example.client.Endpoint;
-
 public class LoginActivity extends AppCompatActivity {
 
     EditText editUserName, editPassword;
     Button login;
     OkHttpClient okHttpClient;
     SharedPreferences sharedPreferences;
-//    String endpointURl = "http://192.168.1.8:5000/employee/";
     String endpointURl = Endpoint.index + "employee/";
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
