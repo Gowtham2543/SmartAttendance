@@ -1,6 +1,9 @@
 package com.example.client;
 
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -29,9 +32,14 @@ public class BiometricActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_biometric);
         Executor executor = ContextCompat.getMainExecutor(this);
+
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+        MediaPlayer mp = MediaPlayer.create(getApplicationContext(), notification);
+        mp.start();
         biometricPrompt = new BiometricPrompt(BiometricActivity.this, executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                mp.stop();
                 super.onAuthenticationError(errorCode, errString);
             }
             @Override
@@ -41,7 +49,9 @@ public class BiometricActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),
                         "Authentication succeeded!", Toast.LENGTH_SHORT).show();
                 sharedPreferences = getSharedPreferences("userDetails", MODE_PRIVATE);
+                mp.stop();
                 Request request = new Request.Builder().header("Authorization", "Bearer " + sharedPreferences.getString("accessToken", null)).url(endpointURl + "present").build();
+
 
                 okHttpClient = new OkHttpClient();
                 okHttpClient.newCall(request).enqueue(new Callback() {
@@ -66,6 +76,7 @@ public class BiometricActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                 biometricPrompt.cancelAuthentication();
                 sharedPreferences = getSharedPreferences("userDetails", MODE_PRIVATE);
+                mp.stop();
                 Request request = new Request.Builder().header("Authorization", "Bearer " + sharedPreferences.getString("accessToken", null)).url(endpointURl + "absent").build();
 
                 okHttpClient = new OkHttpClient();
