@@ -36,13 +36,16 @@ public class DetailActivity extends AppCompatActivity {
     ImageView profile;
     TextView tName, tEmail, tDesignation, tAge, tAttendance,
             displayName, displayEmail, displayAge, displayDesignation, displayAttendance;
-    private GeofencingClient geofencingClient;
     List<Geofence> geofenceList = new ArrayList<>();
     public PendingIntent geofencePendingIntent;
     OkHttpClient okHttpClient;
     SharedPreferences sharedPreferences;
     String endpointURl = Endpoint.index + "employee/";
 
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,7 +116,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private void startGeofence() {
 
-        geofencingClient = LocationServices.getGeofencingClient(this);
+        GeofencingClient geofencingClient = LocationServices.getGeofencingClient(this);
 
         geofenceList.add(new Geofence.Builder()
                 .setRequestId("GEOFENCE LOCATION")
