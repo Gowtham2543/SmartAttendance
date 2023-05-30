@@ -6,6 +6,6 @@ public final class Endpoint {
 
     }
 
-    public static final String index = "http://192.168.1.8:5000//";
+    public static final String index = "http://crafty2543.pythonanywhere.com/";
 
 }
