@@ -1,6 +1,7 @@
 package com.example.client;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
@@ -23,8 +24,30 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        LocationManager lm = (LocationManager)
+                getSystemService(Context. LOCATION_SERVICE ) ;
+        boolean gps_enabled = false;
+        boolean network_enabled = false;
 
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager. GPS_PROVIDER ) ;
+        } catch (Exception e) {
+            e.printStackTrace() ;
+        }
+        try {
+            network_enabled = lm.isProviderEnabled(LocationManager. NETWORK_PROVIDER ) ;
+        } catch (Exception e) {
+            e.printStackTrace() ;
+        }
+        if (!gps_enabled && !network_enabled) {
+            new AlertDialog.Builder(MainActivity. this )
+                    .setMessage( "Please enable the GPS and restart the app")
+                    .setPositiveButton( "Settings" , (paramDialogInterface, paramInt) -> startActivity( new Intent(Settings. ACTION_LOCATION_SOURCE_SETTINGS )))
+                    .setNegativeButton( "Cancel" , null )
+                    .show() ;
+        }
 
+        if(gps_enabled && network_enabled) {
             sharedPreferences = getSharedPreferences("userDetails", MODE_PRIVATE);
             if(sharedPreferences.contains("accessToken")) {
 
@@ -39,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
-
+        }
+        else {
+            Toast.makeText(MainActivity.this, "The app requires GPS to be enabled", Toast.LENGTH_LONG);
+        }
     }
 }

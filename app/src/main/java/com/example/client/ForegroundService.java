@@ -108,7 +108,6 @@ public class ForegroundService extends Service {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if(!LocationManagerCompat.isLocationEnabled(locationManager)) {
 
-
             sharedPreferences = getSharedPreferences("userDetails", MODE_PRIVATE);
 
             Request request = new Request.Builder().header("Authorization", "Bearer " + sharedPreferences.getString("accessToken", null)).url(endpointURl + "absent").build();
