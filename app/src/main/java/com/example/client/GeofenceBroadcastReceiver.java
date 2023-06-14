@@ -39,7 +39,7 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
         }
 
         int geofenceTransition = geofencingEvent.getGeofenceTransition();
-
+        System.out.println(geofenceTransition);
         if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
 
             Toast.makeText(context, "Left Geofence", Toast.LENGTH_LONG).show();

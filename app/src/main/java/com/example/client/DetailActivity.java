@@ -121,7 +121,7 @@ public class DetailActivity extends AppCompatActivity {
         geofenceList.add(new Geofence.Builder()
                 .setRequestId("GEOFENCE LOCATION")
                 .setCircularRegion(
-                        19.025109,
+                        11.025109,
                         77.028585,
                         2
                 )
