@@ -105,6 +105,7 @@ public class DetailActivity extends AppCompatActivity {
                         displayAge.setText(jsonObject.getString("dob"));
                         displayName.setText(jsonObject.getString("first_name"));
                         displayDesignation.setText(jsonObject.getString("designation"));
+                        displayAttendance.setText(jsonObject.getString("attendance_percent"));
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -123,11 +124,11 @@ public class DetailActivity extends AppCompatActivity {
                 .setCircularRegion(
                         11.025109,
                         77.028585,
-                        2
+                        200
                 )
-                .setLoiteringDelay(1000)
+                .setLoiteringDelay(0)
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
-                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_EXIT | Geofence.GEOFENCE_TRANSITION_ENTER)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER | Geofence.GEOFENCE_TRANSITION_EXIT)
                 .build()
         );
 
@@ -147,7 +148,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private GeofencingRequest getGeofencingRequest() {
         GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
-        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_EXIT);
+        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_EXIT | GeofencingRequest.INITIAL_TRIGGER_ENTER);
         builder.addGeofences(geofenceList);
         return builder.build();
     }
