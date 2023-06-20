@@ -58,7 +58,7 @@ public class ForegroundService extends Service {
 
 
         ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(1);
-        scheduledThreadPoolExecutor.scheduleAtFixedRate(this::biometricCheck, 0, 60, TimeUnit.SECONDS);
+        scheduledThreadPoolExecutor.scheduleAtFixedRate(this::biometricCheck, 0, 10, TimeUnit.SECONDS);
 
         ScheduledThreadPoolExecutor scheduledThreadPoolExecutor1 = new ScheduledThreadPoolExecutor(1);
         scheduledThreadPoolExecutor1.scheduleAtFixedRate(this::locationCheck, 0, 1, TimeUnit.SECONDS);
